@@ -64,7 +64,7 @@ pub fn RadialProgress(props: ProgressProps) -> Element {
     rsx!(
         div{
             class:"radial-progress bg-primary text-primary-content border-primary border-4",
-            style:"--value:{props.value};", aria_valuenow:"{props.value}", role: "progressbar"
+            style:"--value:{props.value};", aria_valuenow:"{props.value}", role: "progressbar",
             "{props.value}%"
         }
     )

@@ -12,25 +12,30 @@ pub struct ModalProps {
 
 #[component]
 pub fn Modal(props: ModalProps) -> Element {
-    rsx!(
-        if let Some(action) = &props.submit_action {
-            form { action: "{action}", method: "post",
+    match props.submit_action {
+        Some(action) => {
+            rsx!(
+                form { action: "{action}", method: "post",
+                    dialog {
+                        class: "modal {props.class.clone().unwrap_or_default()}",
+                        id: "{props.trigger_id}",
+                        popover: "auto",
+                        {props.children}
+                    }
+                }
+            )
+        }
+        _ => {
+            rsx!(
                 dialog {
                     class: "modal {props.class.clone().unwrap_or_default()}",
                     id: "{props.trigger_id}",
                     popover: "auto",
                     {props.children}
                 }
-            }
-        } else {
-            dialog {
-                class: "modal {props.class.clone().unwrap_or_default()}",
-                id: "{props.trigger_id}",
-                popover: "auto",
-                {props.children}
-            }
+            )
         }
-    )
+    }
 }
 
 #[derive(Props, Clone, PartialEq)]
@@ -62,7 +67,7 @@ pub fn ModalAction(props: ModalActionProps) -> Element {
 #[test]
 fn test_modal() {
     let props = ModalProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         submit_action: Some("test".to_string()),
         trigger_id: "id".to_string(),
@@ -77,7 +82,7 @@ fn test_modal() {
 #[test]
 fn test_modal_without_submit_action() {
     let props = ModalProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         submit_action: None,
         trigger_id: "id".to_string(),

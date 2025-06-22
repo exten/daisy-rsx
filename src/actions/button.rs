@@ -4,7 +4,7 @@ use std::fmt::Display;
 use dioxus::prelude::*;
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
-pub enum ButtonScheme {
+pub enum ButtonColor {
     #[default]
     Neutral,
     Primary,
@@ -16,17 +16,17 @@ pub enum ButtonScheme {
     Error,
 }
 
-impl Display for ButtonScheme {
+impl Display for ButtonColor {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ButtonScheme::Neutral => write!(f, "btn-neutral"),
-            ButtonScheme::Primary => write!(f, "btn-primary"),
-            ButtonScheme::Secondary => write!(f, "btn-secondary"),
-            ButtonScheme::Accent => write!(f, "btn-accent"),
-            ButtonScheme::Info => write!(f, "btn-info"),
-            ButtonScheme::Success => write!(f, "btn-success"),
-            ButtonScheme::Warning => write!(f, "btn-warning"),
-            ButtonScheme::Error => write!(f, "btn-error"),
+            ButtonColor::Neutral => write!(f, "btn-neutral"),
+            ButtonColor::Primary => write!(f, "btn-primary"),
+            ButtonColor::Secondary => write!(f, "btn-secondary"),
+            ButtonColor::Accent => write!(f, "btn-accent"),
+            ButtonColor::Info => write!(f, "btn-info"),
+            ButtonColor::Success => write!(f, "btn-success"),
+            ButtonColor::Warning => write!(f, "btn-warning"),
+            ButtonColor::Error => write!(f, "btn-error"),
         }
     }
 }
@@ -125,28 +125,27 @@ pub struct ButtonProps {
     target: Option<String>,
     prefix_image_src: Option<String>,
     suffix_image_src: Option<String>,
-    button_type: Option<ButtonType>,
-    button_size: Option<ButtonSize>,
-    button_scheme: Option<ButtonScheme>,
+    btn_type: Option<ButtonType>,
+    btn_size: Option<ButtonSize>,
+    btn_color: Option<ButtonColor>,
     popover_target: Option<String>,
     popover_target_action: Option<String>,
     disabled_text: Option<String>,
-    button_shape: Option<ButtonShape>,
-    button_style: Option<ButtonStyle>,
+    btn_shape: Option<ButtonShape>,
+    btn_style: Option<ButtonStyle>,
 }
 
 #[component]
 pub fn Button(props: ButtonProps) -> Element {
-    let button_scheme = props.button_scheme.unwrap_or_default();
-    let button_type = props.button_type.unwrap_or_default();
-    let button_size = props.button_size.unwrap_or_default();
-    let button_shape = props.button_shape.unwrap_or_default();
-    let button_style = props.button_style.unwrap_or_default();
+    let button_scheme = props.btn_color.unwrap_or_default();
+    let button_type = props.btn_type.unwrap_or_default();
+    let button_size = props.btn_size.unwrap_or_default();
+    let button_shape = props.btn_shape.unwrap_or_default();
+    let button_style = props.btn_style.unwrap_or_default();
     let class = props.class.unwrap_or_default();
     let disabled = props.disabled.filter(|&x| x);
 
-
-    if props.button_type == Some(ButtonType::Link) {
+    if props.btn_type == Some(ButtonType::Link) {
         rsx!(
             a {
                 class: "btn {class} {button_scheme} {button_size} {button_shape} {button_style}",
@@ -193,15 +192,15 @@ pub fn Button(props: ButtonProps) -> Element {
 #[test]
 fn test_button() {
     let props = ButtonProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         href: None,
         target: None,
-        button_scheme: Some(ButtonScheme::Primary),
-        button_size: Some(ButtonSize::Large),
-        button_type: Some(ButtonType::Button),
-        button_shape: None,
-        button_style: None,
+        btn_color: Some(ButtonColor::Primary),
+        btn_size: Some(ButtonSize::Large),
+        btn_type: Some(ButtonType::Button),
+        btn_shape: None,
+        btn_style: None,
         id: Some("id".to_string()),
         disabled: Some(false),
         prefix_image_src: None,
@@ -222,15 +221,15 @@ fn test_button() {
 #[test]
 fn test_button_with_images() {
     let props = ButtonProps {
-        children: rsx!( "Hello" ),
+        children: rsx!("Hello"),
         class: Some("test".to_string()),
         href: None,
         target: None,
-        button_scheme: Some(ButtonScheme::Primary),
-        button_size: Some(ButtonSize::Large),
-        button_type: Some(ButtonType::Button),
-        button_shape: None,
-        button_style: None,
+        btn_color: Some(ButtonColor::Primary),
+        btn_size: Some(ButtonSize::Large),
+        btn_type: Some(ButtonType::Button),
+        btn_shape: None,
+        btn_style: None,
         id: Some("id".to_string()),
         disabled: Some(false),
         prefix_image_src: Some("prefix.png".to_string()),
@@ -250,27 +249,27 @@ fn test_button_with_images() {
 #[test]
 fn test_all_button_schemes() {
     let schemes = [
-        (ButtonScheme::Neutral, "btn-neutral"),
-        (ButtonScheme::Primary, "btn-primary"),
-        (ButtonScheme::Secondary, "btn-secondary"),
-        (ButtonScheme::Accent, "btn-accent"),
-        (ButtonScheme::Info, "btn-info"),
-        (ButtonScheme::Success, "btn-success"),
-        (ButtonScheme::Warning, "btn-warning"),
-        (ButtonScheme::Error, "btn-error"),
+        (ButtonColor::Neutral, "btn-neutral"),
+        (ButtonColor::Primary, "btn-primary"),
+        (ButtonColor::Secondary, "btn-secondary"),
+        (ButtonColor::Accent, "btn-accent"),
+        (ButtonColor::Info, "btn-info"),
+        (ButtonColor::Success, "btn-success"),
+        (ButtonColor::Warning, "btn-warning"),
+        (ButtonColor::Error, "btn-error"),
     ];
 
     for (scheme, expected_class) in schemes {
         let props = ButtonProps {
-            children: rsx!( "Test" ),
+            children: rsx!("Test"),
             class: None,
             href: None,
             target: None,
-            button_scheme: Some(scheme),
-            button_size: None,
-            button_type: None,
-            button_shape: None,
-            button_style: None,
+            btn_color: Some(scheme),
+            btn_size: None,
+            btn_type: None,
+            btn_shape: None,
+            btn_style: None,
             id: None,
             disabled: None,
             prefix_image_src: None,
@@ -281,9 +280,13 @@ fn test_all_button_schemes() {
         };
 
         let result = dioxus_ssr::render_element(Button(props));
-        assert!(result.contains(expected_class),
-                "Expected '{}' to contain '{}', but got: {}",
-                result, expected_class, result);
+        assert!(
+            result.contains(expected_class),
+            "Expected '{}' to contain '{}', but got: {}",
+            result,
+            expected_class,
+            result
+        );
     }
 }
 
@@ -291,15 +294,15 @@ fn test_all_button_schemes() {
 #[test]
 fn test_default_button_scheme() {
     let props = ButtonProps {
-        children: rsx!( "Default" ),
+        children: rsx!("Default"),
         class: None,
         href: None,
         target: None,
-        button_scheme: None, // Should use default (Neutral)
-        button_size: None,
-        button_type: None,
-        button_shape: None,
-        button_style: None,
+        btn_color: None, // Should use default (Neutral)
+        btn_size: None,
+        btn_type: None,
+        btn_shape: None,
+        btn_style: None,
         id: None,
         disabled: None,
         prefix_image_src: None,
@@ -310,6 +313,9 @@ fn test_default_button_scheme() {
     };
 
     let result = dioxus_ssr::render_element(Button(props));
-    assert!(result.contains("btn-neutral"),
-            "Expected default scheme to be 'btn-neutral', but got: {}", result);
+    assert!(
+        result.contains("btn-neutral"),
+        "Expected default scheme to be 'btn-neutral', but got: {}",
+        result
+    );
 }

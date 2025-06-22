@@ -14,7 +14,7 @@ pub mod tab_container;
 pub mod time_line;
 pub mod timeline;
 
-pub use actions::button::{Button, ButtonScheme, ButtonShape, ButtonSize, ButtonStyle, ButtonType};
+pub use actions::button::{Button, ButtonColor, ButtonShape, ButtonSize, ButtonStyle, ButtonType};
 pub use actions::drop_down::{Direction, DropDown, DropDownLink};
 pub use actions::modal::{Modal, ModalAction, ModalBody};
 pub use app_layout::AppLayout;
