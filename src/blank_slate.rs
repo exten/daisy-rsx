@@ -1,5 +1,6 @@
 #![allow(non_snake_case)]
-use super::button::{Button, ButtonScheme};
+
+use crate::actions::button::{BtnColor, Button};
 use dioxus::prelude::*;
 
 #[derive(Props, Clone, PartialEq)]
@@ -48,7 +49,7 @@ pub fn BlankSlate(props: BlankSlateProps) -> Element {
                 Some(pa) => rsx!(
                     div {
                         Button {
-                            button_scheme: ButtonScheme::Primary,
+                            btn_color: BtnColor::Primary,
                             popover_target: "{pa.1}",
                             "{pa.0}"
                         }

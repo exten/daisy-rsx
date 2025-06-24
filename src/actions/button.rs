@@ -4,7 +4,7 @@ use std::fmt::Display;
 use dioxus::prelude::*;
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
-pub enum ButtonColor {
+pub enum BtnColor {
     #[default]
     Neutral,
     Primary,
@@ -16,23 +16,23 @@ pub enum ButtonColor {
     Error,
 }
 
-impl Display for ButtonColor {
+impl Display for BtnColor {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ButtonColor::Neutral => write!(f, "btn-neutral"),
-            ButtonColor::Primary => write!(f, "btn-primary"),
-            ButtonColor::Secondary => write!(f, "btn-secondary"),
-            ButtonColor::Accent => write!(f, "btn-accent"),
-            ButtonColor::Info => write!(f, "btn-info"),
-            ButtonColor::Success => write!(f, "btn-success"),
-            ButtonColor::Warning => write!(f, "btn-warning"),
-            ButtonColor::Error => write!(f, "btn-error"),
+            BtnColor::Neutral => write!(f, "btn-neutral"),
+            BtnColor::Primary => write!(f, "btn-primary"),
+            BtnColor::Secondary => write!(f, "btn-secondary"),
+            BtnColor::Accent => write!(f, "btn-accent"),
+            BtnColor::Info => write!(f, "btn-info"),
+            BtnColor::Success => write!(f, "btn-success"),
+            BtnColor::Warning => write!(f, "btn-warning"),
+            BtnColor::Error => write!(f, "btn-error"),
         }
     }
 }
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
-pub enum ButtonType {
+pub enum BtnType {
     Submit,
     Reset,
     Link,
@@ -40,19 +40,19 @@ pub enum ButtonType {
     Button,
 }
 
-impl Display for ButtonType {
+impl Display for BtnType {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ButtonType::Submit => write!(f, "submit"),
-            ButtonType::Reset => write!(f, "reset"),
-            ButtonType::Button => write!(f, "button"),
-            ButtonType::Link => write!(f, "button"),
+            BtnType::Submit => write!(f, "submit"),
+            BtnType::Reset => write!(f, "reset"),
+            BtnType::Button => write!(f, "button"),
+            BtnType::Link => write!(f, "button"),
         }
     }
 }
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
-pub enum ButtonSize {
+pub enum BtnSize {
     #[default]
     Default,
     Small,
@@ -61,38 +61,38 @@ pub enum ButtonSize {
     Medium,
 }
 
-impl Display for ButtonSize {
+impl Display for BtnSize {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ButtonSize::Default => write!(f, "btn-sm"),
-            ButtonSize::ExtraSmall => write!(f, "btn-xs"),
-            ButtonSize::Small => write!(f, "btn-sm"),
-            ButtonSize::Medium => write!(f, "btn-md"),
-            ButtonSize::Large => write!(f, "btn-lg"),
+            BtnSize::Default => write!(f, "btn-sm"),
+            BtnSize::ExtraSmall => write!(f, "btn-xs"),
+            BtnSize::Small => write!(f, "btn-sm"),
+            BtnSize::Medium => write!(f, "btn-md"),
+            BtnSize::Large => write!(f, "btn-lg"),
         }
     }
 }
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
-pub enum ButtonShape {
+pub enum BtnShape {
     #[default]
     None,
     Circle,
     Square,
 }
 
-impl Display for ButtonShape {
+impl Display for BtnShape {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ButtonShape::None => write!(f, ""),
-            ButtonShape::Circle => write!(f, "btn-circle"),
-            ButtonShape::Square => write!(f, "btn-square"),
+            BtnShape::None => write!(f, ""),
+            BtnShape::Circle => write!(f, "btn-circle"),
+            BtnShape::Square => write!(f, "btn-square"),
         }
     }
 }
 
 #[derive(Default, Copy, Clone, Debug, PartialEq, Eq)]
-pub enum ButtonStyle {
+pub enum BtnStyle {
     #[default]
     None,
     Outline,
@@ -102,21 +102,21 @@ pub enum ButtonStyle {
     Link,
 }
 
-impl Display for ButtonStyle {
+impl Display for BtnStyle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ButtonStyle::None => write!(f, ""),
-            ButtonStyle::Outline => write!(f, "btn-outline"),
-            ButtonStyle::Dash => write!(f, "btn-dash"),
-            ButtonStyle::Soft => write!(f, "btn-soft"),
-            ButtonStyle::Ghost => write!(f, "btn-ghost"),
-            ButtonStyle::Link => write!(f, "btn-link"),
+            BtnStyle::None => write!(f, ""),
+            BtnStyle::Outline => write!(f, "btn-outline"),
+            BtnStyle::Dash => write!(f, "btn-dash"),
+            BtnStyle::Soft => write!(f, "btn-soft"),
+            BtnStyle::Ghost => write!(f, "btn-ghost"),
+            BtnStyle::Link => write!(f, "btn-link"),
         }
     }
 }
 
 #[derive(Props, Clone, PartialEq)]
-pub struct ButtonProps {
+pub struct BtnProps {
     children: Element,
     id: Option<String>,
     disabled: Option<bool>,
@@ -125,30 +125,30 @@ pub struct ButtonProps {
     target: Option<String>,
     prefix_image_src: Option<String>,
     suffix_image_src: Option<String>,
-    btn_type: Option<ButtonType>,
-    btn_size: Option<ButtonSize>,
-    btn_color: Option<ButtonColor>,
+    btn_type: Option<BtnType>,
+    btn_size: Option<BtnSize>,
+    btn_color: Option<BtnColor>,
     popover_target: Option<String>,
     popover_target_action: Option<String>,
     disabled_text: Option<String>,
-    btn_shape: Option<ButtonShape>,
-    btn_style: Option<ButtonStyle>,
+    btn_shape: Option<BtnShape>,
+    btn_style: Option<BtnStyle>,
 }
 
 #[component]
-pub fn Button(props: ButtonProps) -> Element {
-    let button_scheme = props.btn_color.unwrap_or_default();
-    let button_type = props.btn_type.unwrap_or_default();
-    let button_size = props.btn_size.unwrap_or_default();
-    let button_shape = props.btn_shape.unwrap_or_default();
-    let button_style = props.btn_style.unwrap_or_default();
+pub fn Button(props: BtnProps) -> Element {
+    let btn_type = props.btn_type.unwrap_or_default();
+    let btn_size = props.btn_size.unwrap_or_default();
+    let btn_color = props.btn_color.unwrap_or_default();
+    let btn_shape = props.btn_shape.unwrap_or_default();
+    let btn_style = props.btn_style.unwrap_or_default();
     let class = props.class.unwrap_or_default();
     let disabled = props.disabled.filter(|&x| x);
 
-    if props.btn_type == Some(ButtonType::Link) {
+    if props.btn_type == Some(BtnType::Link) {
         rsx!(
             a {
-                class: "btn {class} {button_scheme} {button_size} {button_shape} {button_style}",
+                class: "btn {class} {btn_color} {btn_size} {btn_shape} {btn_style}",
                 id: props.id,
                 href: props.href,
                 target: props.target,
@@ -170,12 +170,12 @@ pub fn Button(props: ButtonProps) -> Element {
     } else {
         rsx!(
             button {
-                class: "btn {class} {button_scheme} {button_size} {button_shape} {button_style}",
+                class: "btn {class} {btn_color} {btn_size} {btn_shape} {btn_style}",
                 id: props.id,
                 disabled,
                 // We wanted to use popover but doesnt seem to work with daisy modals
                 "data-target": props.popover_target,
-                "type": "{button_type}",
+                "type": "{btn_type}",
                 "data-disabled-text": props.disabled_text,
                 if let Some(img_src) = props.prefix_image_src {
                     img { src: "{img_src}", width: "16" }
@@ -191,14 +191,14 @@ pub fn Button(props: ButtonProps) -> Element {
 
 #[test]
 fn test_button() {
-    let props = ButtonProps {
+    let props = BtnProps {
         children: rsx!("Hello"),
         class: Some("test".to_string()),
         href: None,
         target: None,
-        btn_color: Some(ButtonColor::Primary),
-        btn_size: Some(ButtonSize::Large),
-        btn_type: Some(ButtonType::Button),
+        btn_color: Some(BtnColor::Primary),
+        btn_size: Some(BtnSize::Large),
+        btn_type: Some(BtnType::Button),
         btn_shape: None,
         btn_style: None,
         id: Some("id".to_string()),
@@ -220,14 +220,14 @@ fn test_button() {
 // test button with images
 #[test]
 fn test_button_with_images() {
-    let props = ButtonProps {
+    let props = BtnProps {
         children: rsx!("Hello"),
         class: Some("test".to_string()),
         href: None,
         target: None,
-        btn_color: Some(ButtonColor::Primary),
-        btn_size: Some(ButtonSize::Large),
-        btn_type: Some(ButtonType::Button),
+        btn_color: Some(BtnColor::Primary),
+        btn_size: Some(BtnSize::Large),
+        btn_type: Some(BtnType::Button),
         btn_shape: None,
         btn_style: None,
         id: Some("id".to_string()),
@@ -249,18 +249,18 @@ fn test_button_with_images() {
 #[test]
 fn test_all_button_schemes() {
     let schemes = [
-        (ButtonColor::Neutral, "btn-neutral"),
-        (ButtonColor::Primary, "btn-primary"),
-        (ButtonColor::Secondary, "btn-secondary"),
-        (ButtonColor::Accent, "btn-accent"),
-        (ButtonColor::Info, "btn-info"),
-        (ButtonColor::Success, "btn-success"),
-        (ButtonColor::Warning, "btn-warning"),
-        (ButtonColor::Error, "btn-error"),
+        (BtnColor::Neutral, "btn-neutral"),
+        (BtnColor::Primary, "btn-primary"),
+        (BtnColor::Secondary, "btn-secondary"),
+        (BtnColor::Accent, "btn-accent"),
+        (BtnColor::Info, "btn-info"),
+        (BtnColor::Success, "btn-success"),
+        (BtnColor::Warning, "btn-warning"),
+        (BtnColor::Error, "btn-error"),
     ];
 
     for (scheme, expected_class) in schemes {
-        let props = ButtonProps {
+        let props = BtnProps {
             children: rsx!("Test"),
             class: None,
             href: None,
@@ -293,7 +293,7 @@ fn test_all_button_schemes() {
 // test default button scheme
 #[test]
 fn test_default_button_scheme() {
-    let props = ButtonProps {
+    let props = BtnProps {
         children: rsx!("Default"),
         class: None,
         href: None,
